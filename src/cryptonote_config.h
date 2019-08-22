@@ -178,7 +178,7 @@ namespace config
   uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 42;
   uint16_t const P2P_DEFAULT_PORT = 15668;
   uint16_t const RPC_DEFAULT_PORT = 8424;
-  uint16_t const ZMQ_RPC_DEFAULT_PORT = 18082;
+  uint16_t const ZMQ_RPC_DEFAULT_PORT = 9775;
   boost::uuids::uuid const NETWORK_ID = { {
       0xef, 0x3e, 0xb8, 0x7b, 0x1e, 0x40, 0xd2, 0x71, 0x59, 0xdb, 0x4a, 0xcb, 0x1c, 0xba, 0x54, 0x47
     } }; // Bender's nightmare
@@ -192,7 +192,7 @@ namespace config
     uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 63;
     uint16_t const P2P_DEFAULT_PORT = 15668;
     uint16_t const RPC_DEFAULT_PORT = 8424;
-    int16_t const ZMQ_RPC_DEFAULT_PORT = 18082;
+    int16_t const ZMQ_RPC_DEFAULT_PORT = 9775;
     boost::uuids::uuid const NETWORK_ID = {{
         0xef, 0x3e, 0xb8, 0x7b, 0x1e, 0x40, 0xd2, 0x71, 0x59, 0xdb, 0x4a, 0xcb, 0x1c, 0xba, 0x54, 0x47
     } }; // Bender's nightmare
@@ -207,7 +207,7 @@ namespace config
     uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 36;
       uint16_t const P2P_DEFAULT_PORT = 15668;
       uint16_t const RPC_DEFAULT_PORT = 8424;
-      uint16_t const ZMQ_RPC_DEFAULT_PORT = 18082;
+      uint16_t const ZMQ_RPC_DEFAULT_PORT = 9775;
       boost::uuids::uuid const NETWORK_ID = { {
           0xef, 0x3e, 0xb8, 0x7b, 0x1e, 0x40, 0xd2, 0x71, 0x59, 0xdb, 0x4a, 0xcb, 0x1c, 0xba, 0x54, 0x47
       } }; // Bender's nightmare
