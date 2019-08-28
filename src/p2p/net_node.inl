@@ -448,21 +448,21 @@ namespace nodetool
       std::set<std::string> full_addrs;
       if (nettype == cryptonote::TESTNET)
       {
-          full_addrs.insert("3.86.14.209:15668");
-          full_addrs.insert("3.84.133.181:15668");
+          full_addrs.insert("54.226.63.10:15668");
+          full_addrs.insert("34.207.144.231:15668");
       }
       else if (nettype == cryptonote::STAGENET)
       {
-          full_addrs.insert("3.86.14.209:15668");
-          full_addrs.insert("3.84.133.181:15668");
+          full_addrs.insert("54.226.63.10:15668");
+          full_addrs.insert("34.207.144.231:15668");
       }
       else if (nettype == cryptonote::FAKECHAIN)
       {
       }
       else
       {
-          full_addrs.insert("3.86.14.209:15668");
-          full_addrs.insert("3.84.133.181:15668");
+          full_addrs.insert("54.226.63.10:15668");
+          full_addrs.insert("34.207.144.231:15668");
       }
       return full_addrs;
   }
