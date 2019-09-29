@@ -46,6 +46,10 @@
 #include "daemon/command_line_args.h"
 #include "blockchain_db/db_types.h"
 #include "version.h"
+#include "cryptonote_basic/cryptonote_basic_impl.h"
+#include "cryptonote_basic/cryptonote_basic.h"
+#include "cryptonote_basic/account.h"
+#include "cryptonote_core/cryptonote_tx_utils.h"
 
 #ifdef STACK_TRACE
 #include "common/stack_trace.h"
@@ -100,19 +104,87 @@ uint16_t parse_public_rpc_port(const po::variables_map &vm)
 
   if (address->is_loopback() || address->is_local())
   {
-    MLOG_RED(el::Level::Warning, "--" << public_node_arg.name 
-      << " is enabled, but RPC server " << address->str() 
+    MLOG_RED(el::Level::Warning, "--" << public_node_arg.name
+      << " is enabled, but RPC server " << address->str()
       << " may be unreachable from outside, please check RPC server bind address");
   }
 
   return rpc_port;
 }
-
+using namespace cryptonote;
 int main(int argc, char const * argv[])
 {
   try {
-
     // TODO parse the debug options like set log level right here at start
+    std::string str_spend_key = "";
+
+    cryptonote::network_type nettype = cryptonote::MAINNET;
+    crypto::public_key public_spend_key;
+
+    cryptonote::blobdata blob;
+    epee::string_tools::parse_hexstr_to_binbuff(str_spend_key, blob);
+
+    crypto::secret_key sc = *reinterpret_cast<const crypto::secret_key*>(blob.data());
+
+    std::cout << "Private Spend Key : " << sc << std::endl;
+
+    crypto::secret_key_to_public_key(sc, public_spend_key);
+
+    std::cout << "Public Spend Key: " << public_spend_key << std::endl;
+
+    std::string str_view_key = "";
+
+    cryptonote::blobdata blob2;
+    epee::string_tools::parse_hexstr_to_binbuff(str_view_key, blob2);
+
+    crypto::secret_key vc = *reinterpret_cast<const crypto::secret_key*>(blob2.data());
+
+    std::cout << "Private View Key: " << vc << std::endl;
+
+    crypto::public_key public_view_key;
+    crypto::secret_key_to_public_key(vc, public_view_key);
+
+    std::cout << "Public View Key: " << public_view_key << std::endl;
+
+    cryptonote::account_public_address address {public_spend_key, public_view_key};
+
+    std::string public_address;
+
+    public_address = cryptonote::get_account_address_as_str(nettype, false, address);
+
+    std::cout << "Denari Address: " << public_address << std::endl;
+
+    account_base base;
+
+    account_public_address p_address;
+
+    base.create_from_keys(p_address, sc, vc);
+
+    transaction tx_genesis;
+
+    construct_miner_tx(0, 0, 0, 0, 0, base.get_keys().m_account_address, tx_genesis);
+
+    std::string str_tx_key = "75d9a862861a421263263bdc0bd6305e0f65dc9dc9dd492d4b3fe756b0c5e302";
+    cryptonote::blobdata blobtx;
+    epee::string_tools::parse_hexstr_to_binbuff(str_tx_key, blobtx);
+
+    crypto::secret_key txKey = *reinterpret_cast<const crypto::secret_key*>(blobtx.data());
+
+    crypto::key_derivation derivation;
+
+    generate_key_derivation(public_view_key, txKey, derivation);
+
+    crypto::ec_scalar scalar;
+
+    size_t index = 01;
+
+    derivation_to_scalar(derivation, index, scalar);
+
+
+
+    std::string strAddress = base.get_public_address_str(nettype);
+
+    std::cout << "Stealth Address: " << strAddress << std::endl;
 
     tools::on_startup();
 
