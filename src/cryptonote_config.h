@@ -167,119 +167,119 @@
 // New constants are intended to go here
 namespace config
 {
-    uint64_t const DEFAULT_FEE_ATOMIC_XMR_PER_KB = 400; // Just a placeholder!  Change me!
-    uint8_t const FEE_CALCULATION_MAX_RETRIES = 10;
-    uint64_t const DEFAULT_DUST_THRESHOLD = ((uint64_t)2000000000); // 2 * pow(10, 9)
-    uint64_t const BASE_REWARD_CLAMP_THRESHOLD = ((uint64_t)100000000); // pow(10, 8)
-    std::string const P2P_REMOTE_DEBUG_TRUSTED_PUB_KEY = "0000000000000000000000000000000000000000000000000000000000000000";
+  uint64_t const DEFAULT_FEE_ATOMIC_XMR_PER_KB = 500; // Just a placeholder!  Change me!
+  uint8_t const FEE_CALCULATION_MAX_RETRIES = 10;
+  uint64_t const DEFAULT_DUST_THRESHOLD = ((uint64_t)2000000000); // 2 * pow(10, 9)
+  uint64_t const BASE_REWARD_CLAMP_THRESHOLD = ((uint64_t)100000000); // pow(10, 8)
+  std::string const P2P_REMOTE_DEBUG_TRUSTED_PUB_KEY = "0000000000000000000000000000000000000000000000000000000000000000";
 
-    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 26;
-    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 27;
-    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 62;
+  uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 18;
+  uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 19;
+  uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 42;
+  uint16_t const P2P_DEFAULT_PORT = 15668;
+  uint16_t const RPC_DEFAULT_PORT = 8424;
+  uint16_t const ZMQ_RPC_DEFAULT_PORT = 9775;
+  boost::uuids::uuid const NETWORK_ID = { {
+      0xef, 0x3e, 0xb8, 0x7b, 0x1e, 0x40, 0xd2, 0x71, 0x59, 0xdb, 0x4a, 0xcb, 0x1c, 0xba, 0x54, 0x47
+    } }; // Bender's nightmare
+  std::string const GENESIS_TX = "013c01ff0006ff9fdb5802372a4217a5fa172831e3e744c264ea6f13caed1d573472d07af574fec712136e80a8d6b90702e162f83c3d96a94cd0d0b0666c49cd3d00e7ba44bbf053d8c95ab2f9bd6bf7808088aca3cf02028a7d6a8019b4d466308944830846dd2799eb6248e6a0dee0d30edcc316329f578090cad2c60e02eb7e65da42b73ca610630bae36b64037fbc19bde15e2c7c92e3d08ce034473bb80e08d84ddcb0102f5728759ea8f9ad49347034537e667f17012c63962330fa9b9564ac97c75a7d080c0caf384a30202349f61d854c3cd65de6d5e13b8b626ef86911f397c3967f7adebd96491502b06210139f42191d08e85bf2e6a3eccca0f5c36ade45073dd5ae352c13f04ce10b983d8";
+  uint32_t const GENESIS_NONCE = 10000;
+
+  namespace testnet
+  {
+    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 53;
+    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 54;
+    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 63;
     uint16_t const P2P_DEFAULT_PORT = 15668;
     uint16_t const RPC_DEFAULT_PORT = 8424;
-    uint16_t const ZMQ_RPC_DEFAULT_PORT = 9775;
-    boost::uuids::uuid const NETWORK_ID = { {
+    int16_t const ZMQ_RPC_DEFAULT_PORT = 9775;
+    boost::uuids::uuid const NETWORK_ID = {{
         0xef, 0x3e, 0xb8, 0x7b, 0x1e, 0x40, 0xd2, 0x71, 0x59, 0xdb, 0x4a, 0xcb, 0x1c, 0xba, 0x54, 0x47
     } }; // Bender's nightmare
-    std::string const GENESIS_TX = "";
-    uint32_t const GENESIS_NONCE = 15000;
+    std::string const GENESIS_TX = "013c01ff0006ff9fdb5802372a4217a5fa172831e3e744c264ea6f13caed1d573472d07af574fec712136e80a8d6b90702e162f83c3d96a94cd0d0b0666c49cd3d00e7ba44bbf053d8c95ab2f9bd6bf7808088aca3cf02028a7d6a8019b4d466308944830846dd2799eb6248e6a0dee0d30edcc316329f578090cad2c60e02eb7e65da42b73ca610630bae36b64037fbc19bde15e2c7c92e3d08ce034473bb80e08d84ddcb0102f5728759ea8f9ad49347034537e667f17012c63962330fa9b9564ac97c75a7d080c0caf384a30202349f61d854c3cd65de6d5e13b8b626ef86911f397c3967f7adebd96491502b06210139f42191d08e85bf2e6a3eccca0f5c36ade45073dd5ae352c13f04ce10b983d8";
+    uint32_t const GENESIS_NONCE = 10001;
+  }
 
-    namespace testnet
-    {
-        uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 73;
-        uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 74;
-        uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 43;
-        uint16_t const P2P_DEFAULT_PORT = 15668;
-        uint16_t const RPC_DEFAULT_PORT = 8424;
-        int16_t const ZMQ_RPC_DEFAULT_PORT = 9775;
-        boost::uuids::uuid const NETWORK_ID = {{
-            0xef, 0x3e, 0xb8, 0x7b, 0x1e, 0x40, 0xd2, 0x71, 0x59, 0xdb, 0x4a, 0xcb, 0x1c, 0xba, 0x54, 0x47
-        } }; // Bender's nightmare
-        std::string const GENESIS_TX = "013c01ff0006ff9fdb5802372a4217a5fa172831e3e744c264ea6f13caed1d573472d07af574fec712136e80a8d6b90702e162f83c3d96a94cd0d0b0666c49cd3d00e7ba44bbf053d8c95ab2f9bd6bf7808088aca3cf02028a7d6a8019b4d466308944830846dd2799eb6248e6a0dee0d30edcc316329f578090cad2c60e02eb7e65da42b73ca610630bae36b64037fbc19bde15e2c7c92e3d08ce034473bb80e08d84ddcb0102f5728759ea8f9ad49347034537e667f17012c63962330fa9b9564ac97c75a7d080c0caf384a30202349f61d854c3cd65de6d5e13b8b626ef86911f397c3967f7adebd96491502b06210139f42191d08e85bf2e6a3eccca0f5c36ade45073dd5ae352c13f04ce10b983d8";
-        uint32_t const GENESIS_NONCE = 10001;
-    }
-
-    namespace stagenet
-    {
-        uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 14;
-        uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 15;
-        uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 46;
-        uint16_t const P2P_DEFAULT_PORT = 15668;
-        uint16_t const RPC_DEFAULT_PORT = 8424;
-        uint16_t const ZMQ_RPC_DEFAULT_PORT = 9775;
-        boost::uuids::uuid const NETWORK_ID = { {
-            0xef, 0x3e, 0xb8, 0x7b, 0x1e, 0x40, 0xd2, 0x71, 0x59, 0xdb, 0x4a, 0xcb, 0x1c, 0xba, 0x54, 0x47
-        } }; // Bender's nightmare
-        std::string const GENESIS_TX = "13c01ff0001ffffffffffff0f029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd0880712101ac6350adb8136bb7c7ebb85b41e1f4a57e3e7d8d72590af7026cc163fd06c450";
-        uint32_t const GENESIS_NONCE = 10002;
-    }
+  namespace stagenet
+  {
+    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 24;
+    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 25;
+    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 36;
+      uint16_t const P2P_DEFAULT_PORT = 15668;
+      uint16_t const RPC_DEFAULT_PORT = 8424;
+      uint16_t const ZMQ_RPC_DEFAULT_PORT = 9775;
+      boost::uuids::uuid const NETWORK_ID = { {
+          0xef, 0x3e, 0xb8, 0x7b, 0x1e, 0x40, 0xd2, 0x71, 0x59, 0xdb, 0x4a, 0xcb, 0x1c, 0xba, 0x54, 0x47
+      } }; // Bender's nightmare
+    std::string const GENESIS_TX = "013c01ff0006ff9fdb5802372a4217a5fa172831e3e744c264ea6f13caed1d573472d07af574fec712136e80a8d6b90702e162f83c3d96a94cd0d0b0666c49cd3d00e7ba44bbf053d8c95ab2f9bd6bf7808088aca3cf02028a7d6a8019b4d466308944830846dd2799eb6248e6a0dee0d30edcc316329f578090cad2c60e02eb7e65da42b73ca610630bae36b64037fbc19bde15e2c7c92e3d08ce034473bb80e08d84ddcb0102f5728759ea8f9ad49347034537e667f17012c63962330fa9b9564ac97c75a7d080c0caf384a30202349f61d854c3cd65de6d5e13b8b626ef86911f397c3967f7adebd96491502b06210139f42191d08e85bf2e6a3eccca0f5c36ade45073dd5ae352c13f04ce10b983d8";
+    uint32_t const GENESIS_NONCE = 10002;
+  }
 }
 
 namespace cryptonote
 {
-    enum network_type : uint8_t
-    {
-        MAINNET = 0,
-        TESTNET,
-        STAGENET,
-        FAKECHAIN,
-        UNDEFINED = 255
+  enum network_type : uint8_t
+  {
+    MAINNET = 0,
+    TESTNET,
+    STAGENET,
+    FAKECHAIN,
+    UNDEFINED = 255
+  };
+  struct config_t
+  {
+    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX;
+    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX;
+    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX;
+    uint16_t const P2P_DEFAULT_PORT;
+    uint16_t const RPC_DEFAULT_PORT;
+    uint16_t const ZMQ_RPC_DEFAULT_PORT;
+    boost::uuids::uuid const NETWORK_ID;
+    std::string const GENESIS_TX;
+    uint32_t const GENESIS_NONCE;
+  };
+  inline const config_t& get_config(network_type nettype)
+  {
+    static const config_t mainnet = {
+      ::config::CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX,
+      ::config::CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX,
+      ::config::CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX,
+      ::config::P2P_DEFAULT_PORT,
+      ::config::RPC_DEFAULT_PORT,
+      ::config::ZMQ_RPC_DEFAULT_PORT,
+      ::config::NETWORK_ID,
+      ::config::GENESIS_TX,
+      ::config::GENESIS_NONCE
     };
-    struct config_t
-    {
-        uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX;
-        uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX;
-        uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX;
-        uint16_t const P2P_DEFAULT_PORT;
-        uint16_t const RPC_DEFAULT_PORT;
-        uint16_t const ZMQ_RPC_DEFAULT_PORT;
-        boost::uuids::uuid const NETWORK_ID;
-        std::string const GENESIS_TX;
-        uint32_t const GENESIS_NONCE;
+    static const config_t testnet = {
+      ::config::testnet::CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX,
+      ::config::testnet::CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX,
+      ::config::testnet::CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX,
+      ::config::testnet::P2P_DEFAULT_PORT,
+      ::config::testnet::RPC_DEFAULT_PORT,
+      ::config::testnet::ZMQ_RPC_DEFAULT_PORT,
+      ::config::testnet::NETWORK_ID,
+      ::config::testnet::GENESIS_TX,
+      ::config::testnet::GENESIS_NONCE
     };
-    inline const config_t& get_config(network_type nettype)
-    {
-        static const config_t mainnet = {
-                ::config::CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX,
-                ::config::CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX,
-                ::config::CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX,
-                ::config::P2P_DEFAULT_PORT,
-                ::config::RPC_DEFAULT_PORT,
-                ::config::ZMQ_RPC_DEFAULT_PORT,
-                ::config::NETWORK_ID,
-                ::config::GENESIS_TX,
-                ::config::GENESIS_NONCE
-        };
-        static const config_t testnet = {
-                ::config::testnet::CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX,
-                ::config::testnet::CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX,
-                ::config::testnet::CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX,
-                ::config::testnet::P2P_DEFAULT_PORT,
-                ::config::testnet::RPC_DEFAULT_PORT,
-                ::config::testnet::ZMQ_RPC_DEFAULT_PORT,
-                ::config::testnet::NETWORK_ID,
-                ::config::testnet::GENESIS_TX,
-                ::config::testnet::GENESIS_NONCE
-        };
-        static const config_t stagenet = {
-                ::config::stagenet::CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX,
-                ::config::stagenet::CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX,
-                ::config::stagenet::CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX,
-                ::config::stagenet::P2P_DEFAULT_PORT,
-                ::config::stagenet::RPC_DEFAULT_PORT,
-                ::config::stagenet::ZMQ_RPC_DEFAULT_PORT,
-                ::config::stagenet::NETWORK_ID,
-                ::config::stagenet::GENESIS_TX,
-                ::config::stagenet::GENESIS_NONCE
-        };
-        switch (nettype)
-        {
-            case MAINNET: return mainnet;
-            case TESTNET: return testnet;
-            case STAGENET: return stagenet;
-            case FAKECHAIN: return mainnet;
-            default: throw std::runtime_error("Invalid network type");
-        }
+    static const config_t stagenet = {
+      ::config::stagenet::CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX,
+      ::config::stagenet::CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX,
+      ::config::stagenet::CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX,
+      ::config::stagenet::P2P_DEFAULT_PORT,
+      ::config::stagenet::RPC_DEFAULT_PORT,
+      ::config::stagenet::ZMQ_RPC_DEFAULT_PORT,
+      ::config::stagenet::NETWORK_ID,
+      ::config::stagenet::GENESIS_TX,
+      ::config::stagenet::GENESIS_NONCE
     };
+    switch (nettype)
+    {
+      case MAINNET: return mainnet;
+      case TESTNET: return testnet;
+      case STAGENET: return stagenet;
+      case FAKECHAIN: return mainnet;
+      default: throw std::runtime_error("Invalid network type");
+    }
+  };
 }

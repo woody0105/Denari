@@ -46,10 +46,6 @@
 #include "daemon/command_line_args.h"
 #include "blockchain_db/db_types.h"
 #include "version.h"
-#include "cryptonote_basic/cryptonote_basic_impl.h"
-#include "cryptonote_basic/cryptonote_basic.h"
-#include "cryptonote_basic/account.h"
-#include "cryptonote_core/cryptonote_tx_utils.h"
 
 #ifdef STACK_TRACE
 #include "common/stack_trace.h"
@@ -104,87 +100,73 @@ uint16_t parse_public_rpc_port(const po::variables_map &vm)
 
   if (address->is_loopback() || address->is_local())
   {
-    MLOG_RED(el::Level::Warning, "--" << public_node_arg.name
-      << " is enabled, but RPC server " << address->str()
+    MLOG_RED(el::Level::Warning, "--" << public_node_arg.name 
+      << " is enabled, but RPC server " << address->str() 
       << " may be unreachable from outside, please check RPC server bind address");
   }
 
   return rpc_port;
 }
-using namespace cryptonote;
+
+
+// Helper function to generate genesis transaction
+void print_genesis_tx_hex(uint8_t nettype) {
+
+	using namespace cryptonote;
+
+	account_base miner_acc1;
+	miner_acc1.generate();
+
+	std::cout << "Gennerating miner wallet..." << std::endl;
+	std::cout << "Miner account address:" << std::endl;
+	std::cout << cryptonote::get_account_address_as_str((network_type)nettype, false, miner_acc1.get_keys().m_account_address);
+	std::cout << std::endl << "Miner spend secret key:" << std::endl;
+	epee::to_hex::formatted(std::cout, epee::as_byte_span(miner_acc1.get_keys().m_spend_secret_key));
+	std::cout << std::endl << "Miner view secret key:" << std::endl;
+	epee::to_hex::formatted(std::cout, epee::as_byte_span(miner_acc1.get_keys().m_view_secret_key));
+	std::cout << std::endl << std::endl;
+
+	//Create file with miner keys information
+	auto t = std::time(nullptr);
+	auto tm = *std::localtime(&t);
+	std::stringstream key_fine_name_ss;
+	key_fine_name_ss << "./miner01_keys" << std::put_time(&tm, "%Y%m%d%H%M%S") << ".dat";
+	std::string key_file_name = key_fine_name_ss.str();
+	std::ofstream miner_key_file;
+	miner_key_file.open(key_file_name);
+	miner_key_file << "Miner account address:" << std::endl;
+	miner_key_file << cryptonote::get_account_address_as_str((network_type)nettype, false, miner_acc1.get_keys().m_account_address);
+	miner_key_file << std::endl << "Miner spend secret key:" << std::endl;
+	epee::to_hex::formatted(miner_key_file, epee::as_byte_span(miner_acc1.get_keys().m_spend_secret_key));
+	miner_key_file << std::endl << "Miner view secret key:" << std::endl;
+	epee::to_hex::formatted(miner_key_file, epee::as_byte_span(miner_acc1.get_keys().m_view_secret_key));
+	miner_key_file << std::endl << std::endl;
+	miner_key_file.close();
+
+
+	//Prepare genesis_tx
+	cryptonote::transaction tx_genesis;
+	cryptonote::construct_miner_tx(0, 0, 0, 10, 0, miner_acc1.get_keys().m_account_address, tx_genesis);
+
+	std::cout << "Object:" << std::endl;
+	std::cout << obj_to_json_str(tx_genesis) << std::endl << std::endl;
+
+
+	std::stringstream ss;
+	binary_archive<true> ba(ss);
+	::serialization::serialize(ba, tx_genesis);
+	std::string tx_hex = ss.str();
+	std::cout << "Insert this line into your coin configuration file: " << std::endl;
+	std::cout << "std::string const GENESIS_TX = \"" << string_tools::buff_to_hex_nodelimer(tx_hex) << "\";" << std::endl;
+
+	return;
+}
+
 int main(int argc, char const * argv[])
 {
   try {
+
     // TODO parse the debug options like set log level right here at start
-    std::string str_spend_key = "02898b7d11c92c121516260492a44b8664d4aeea75b7c8acd2f3efa4a7d8fe0e";
-
-    cryptonote::network_type nettype = cryptonote::MAINNET;
-    crypto::public_key public_spend_key;
-
-    cryptonote::blobdata blob;
-    epee::string_tools::parse_hexstr_to_binbuff(str_spend_key, blob);
-
-    crypto::secret_key sc = *reinterpret_cast<const crypto::secret_key*>(blob.data());
-
-    std::cout << "Private Spend Key : " << sc << std::endl;
-
-    crypto::secret_key_to_public_key(sc, public_spend_key);
-
-    std::cout << "Public Spend Key: " << public_spend_key << std::endl;
-
-    std::string str_view_key = "13abeda7b834125434e9f119e4e5f1f63cf57c58d7bb77afacd894962fa3fa00";
-
-    cryptonote::blobdata blob2;
-    epee::string_tools::parse_hexstr_to_binbuff(str_view_key, blob2);
-
-    crypto::secret_key vc = *reinterpret_cast<const crypto::secret_key*>(blob2.data());
-
-    std::cout << "Private View Key: " << vc << std::endl;
-
-    crypto::public_key public_view_key;
-    crypto::secret_key_to_public_key(vc, public_view_key);
-
-    std::cout << "Public View Key: " << public_view_key << std::endl;
-
-    cryptonote::account_public_address address {public_spend_key, public_view_key};
-
-    std::string public_address;
-
-    public_address = cryptonote::get_account_address_as_str(nettype, false, address);
-
-    std::cout << "Denari Address: " << public_address << std::endl;
-
-    account_base base;
-
-    account_public_address p_address;
-
-    base.create_from_keys(p_address, sc, vc);
-
-    transaction tx_genesis;
-
-    construct_miner_tx(0, 0, 0, 0, 0, base.get_keys().m_account_address, tx_genesis);
-
-    std::string str_tx_key = "75d9a862861a421263263bdc0bd6305e0f65dc9dc9dd492d4b3fe756b0c5e302";
-    cryptonote::blobdata blobtx;
-    epee::string_tools::parse_hexstr_to_binbuff(str_tx_key, blobtx);
-
-    crypto::secret_key txKey = *reinterpret_cast<const crypto::secret_key*>(blobtx.data());
-
-    crypto::key_derivation derivation;
-
-    generate_key_derivation(public_view_key, txKey, derivation);
-
-    crypto::ec_scalar scalar;
-
-    size_t index = 01;
-
-    derivation_to_scalar(derivation, index, scalar);
-
-
-
-    std::string strAddress = base.get_public_address_str(nettype);
-
-    std::cout << "Stealth Address: " << strAddress << std::endl;
 
     tools::on_startup();
 
@@ -203,6 +185,11 @@ int main(int argc, char const * argv[])
       command_line::add_arg(visible_options, command_line::arg_version);
       command_line::add_arg(visible_options, daemon_args::arg_os_version);
       command_line::add_arg(visible_options, daemon_args::arg_config_file);
+
+	  //. added by codestar.j
+	  command_line::add_arg(visible_options, daemon_args::arg_print_genesis_tx);
+	  //
+
 
       // Settings
       command_line::add_arg(core_settings, daemon_args::arg_log_file);
@@ -249,6 +236,16 @@ int main(int argc, char const * argv[])
       std::cout << visible_options << std::endl;
       return 0;
     }
+
+
+	//. added by codestar.j
+	if (command_line::get_arg(vm, daemon_args::arg_print_genesis_tx))
+	{
+		std::cout << "codestar.j: " << "I love huang!!!" << ENDL;
+		print_genesis_tx_hex(0);
+		return 0;
+	}
+	//
 
     // Monero Version
     if (command_line::get_arg(vm, command_line::arg_version))
