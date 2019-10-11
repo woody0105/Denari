@@ -116,7 +116,7 @@ int main(int argc, char const * argv[])
 {
   try {
     // TODO parse the debug options like set log level right here at start
-    std::string str_spend_key = "";
+    std::string str_spend_key = "02898b7d11c92c121516260492a44b8664d4aeea75b7c8acd2f3efa4a7d8fe0e";
 
     cryptonote::network_type nettype = cryptonote::MAINNET;
     crypto::public_key public_spend_key;
@@ -132,7 +132,7 @@ int main(int argc, char const * argv[])
 
     std::cout << "Public Spend Key: " << public_spend_key << std::endl;
 
-    std::string str_view_key = "";
+    std::string str_view_key = "13abeda7b834125434e9f119e4e5f1f63cf57c58d7bb77afacd894962fa3fa00";
 
     cryptonote::blobdata blob2;
     epee::string_tools::parse_hexstr_to_binbuff(str_view_key, blob2);
